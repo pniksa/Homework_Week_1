@@ -1,1 +1,80 @@
+Exercise 1: Programming the tax calculator by myself
+----------------------------------------------------
+def tax_calculator(taxes, inc):
+    """The tax calculator calculates the taxes to pay. It uses the income and a list of tuples
+    containing pairs of tax-limits and the related tax interest."""
 
+    # Step 1: Convert the list of tuples into a list of lists
+    tax_list = []
+    for i in taxes:
+        tax_list.append(list(i))
+
+    # Step 2: Append a new sublist to ensure that the largest taxvalue is larger than the income
+    tax_list.append([tax_list[-1][0] + inc, tax_list[-1][1]])
+
+    # Step 3: Change the first taxvalue that is larger than the income into the income value
+    for i in tax_list:
+        if i[0] > income:
+            i[0] = income
+            break
+
+    # Step 4: Sum up the taxes to pay
+    tax_sum = 0
+    tax_limit_before = 0
+    for tax_limit, perc in tax_list:
+        if inc >= tax_limit:
+            tax_sum += (tax_limit - tax_limit_before)*perc
+            print(tax_sum, tax_limit, tax_limit_before)
+            tax_limit_before = tax_limit
+
+    return tax_sum
+
+income = 10000000
+tax = [(50000, 0.08), (100000, 0.10), (150000, 0.15), (180000, 0.20)]
+
+print(tax_calculator(tax, income))
+
+
+Exercise 2: Programming my own version of hangman:
+--------------------------------------------------
+def hangman(wordlist):
+    word = wordlist.pop()
+    result_collector = list(str("_" * len(word)))
+    print(result_collector, "\n")
+    guessed_letters = []
+    while "_" in result_collector:
+        x = str(input("Guess a letter: "))
+        guessed_letters.append(x)
+        if x in word:
+            for i in range(len(word)):
+                if word[i] == x:
+                    result_collector[i] = word[i]
+                    print(result_collector)
+        else:
+            print("Letter not part of the word we are searching for.")
+        print("Letters guessed so far: ", guessed_letters, "\n")
+
+    result = ("You made it! The word was: ", word)
+    return result
+
+words = {"Python", "While", "Loop", "Integer", "Float"}
+print(hangman(words))
+
+
+Exercise 3: Programming my own version of bogosort (without using the sort() function):
+---------------------------------------------------------------------------------------
+import random
+
+def bogosort(unsorted):
+    """ The funcion takes an unsorted list of values as an input and returns the list sorted."""
+    counter = 0
+    while counter != len(unsorted) - 1:
+        counter = 0
+        random.shuffle(unsorted)
+        for i in range(len(unsorted) - 1):
+            if unsorted[i] <= unsorted[i + 1]:
+                counter += 1
+    return unsorted
+
+unsorted_list = [2, 1, 7, 9, 8, 12, 1, 14, 19]
+print(bogosort(unsorted_list))
