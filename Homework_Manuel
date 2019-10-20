@@ -38,7 +38,11 @@ print(tax_calculator(tax, income))
 Exercise 2: Programming my own version of hangman:
 --------------------------------------------------
 def hangman(wordlist):
+    """ This function picks randomly one word out of a set that has to be guessed.
+    Please use lower case letters only for guessing!"""
     word = wordlist.pop()
+    word = word.lower()
+    print(word)
     result_collector = list(str("_" * len(word)))
     print(result_collector, "\n")
     guessed_letters = []
@@ -49,15 +53,16 @@ def hangman(wordlist):
             for i in range(len(word)):
                 if word[i] == x:
                     result_collector[i] = word[i]
+                    result_collector[0] = result_collector[0].upper()
                     print(result_collector)
         else:
             print("Letter not part of the word we are searching for.")
         print("Letters guessed so far: ", guessed_letters, "\n")
 
-    result = ("You made it! The word was: ", word)
+    result = ("You made it! The word was: ", word.capitalize())
     return result
 
-words = {"Python", "While", "Loop", "Integer", "Float"}
+words = {"Dictionary", "String", "Boolean", "Tuple", "List", "While", "Function", "Property"}
 print(hangman(words))
 
 
